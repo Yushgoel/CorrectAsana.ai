@@ -1,10 +1,13 @@
 import enum
+import ConditionCheck
+
 start = None
 end = None
 next = None
 watt = None
 itemtype = None
 item = None
+quit = None
 people = 0
 onoff = []
 power = []
@@ -14,7 +17,7 @@ entertainment = []
 cleaning = []
 work = []
 house = []
-devices = []
+electronics = []
 kitchen = []
 
 categories = {
@@ -22,7 +25,7 @@ categories = {
     "CLEANING" : 1,
     "WORK" : 2,
     "HOUSE" : 3,
-    "DEVICES": 4,
+    "ELECTRONICS": 4,
     "KITCHEN": 5
 }
 
@@ -31,7 +34,7 @@ reverse_categories = {
     1: "CLEANING",
     2: "WORK",
     3: "HOUSE",
-    4: "DEVICES",
+    4: "ELECTRONICS",
     5: "KITCHEN"
 }
 
@@ -41,21 +44,23 @@ reverse_categories = {
 condition = {}
 wattage = {}
 
-electronics = {}
+devices = {}
 
 start = int(input("Press 1 to start"))
-#should be replace by a button
+#should be replaced by a button
 
 if start == 1:
-    people = int(input("How many people are currently in your house?"))
+    #people = int(input("How many people are currently in your house?"))
     while end != 1:
 
         item = str(input("Item name: "))
-        watt = str(input("Wattage: "))
-        itemtype = int(input("0 for entertainment, 1 for cleaning, 2 for work, 3 for house, 4 for device, 5 for kitchen: "))
-        onoff = int(input("Press 1 if it is on and 0 if it is off"))
+        watt = int(input("Wattage: "))
+        #itemtype = int(input("0 for entertainment, 1 for cleaning, 2 for work, 3 for house, 4 for electronics, 5 for kitchen: "))
+        itemtype = 0
+        #onoff = int(input("Press 1 if it is on and 0 if it is off"))
+        onoff = 1
 
-        electronics[item] = [watt, onoff, itemtype]
+        devices[item] = [watt, onoff, itemtype]
 
         end = int(input("Press 1 to end 0 to continue"))
 
@@ -63,18 +68,22 @@ if start == 1:
             break
         else:
             pass
-    print(electronics)
+
     #remove later only for testing
 
 
-    for item in electronics:
-        if item
+    print("Your")
+    for item in devices:
+        if devices[item][0] > 1000:
+          print("{},".format(item))
+        else:
+            pass
 
 
-else:
-    i = int()
-    while next != 1:
+    print("are consuming a lot of power, considering switching them off when unnecessary")
 
+quit = int(input("Press 1 to stop running"))
+start = 0
 
 
 
