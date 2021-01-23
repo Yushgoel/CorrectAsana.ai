@@ -164,6 +164,8 @@ class PosenetActivity :
 
   private var currentPoseHeader: TextView? = null
 
+  private var timeLeftText: TextView? = null
+
   private var currentPoseIndex: Int = 0
 
   private var poses = arrayOf("Mountain Pose", "Tree Pose", "Squat")
@@ -227,6 +229,7 @@ class PosenetActivity :
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     surfaceView = view.findViewById(R.id.surfaceView)
     currentPoseHeader = view.findViewById(R.id.PoseHeader)
+    timeLeftText = view.findViewById(R.id.Clock)
     surfaceHolder = surfaceView!!.holder
   }
 
@@ -289,7 +292,6 @@ class PosenetActivity :
       for (cameraId in manager.cameraIdList) {
         val characteristics = manager.getCameraCharacteristics(cameraId)
 
-        // We don't use a front facing camera in this sample.
         val cameraDirection = characteristics.get(CameraCharacteristics.LENS_FACING)
         if (cameraDirection != null &&
           cameraDirection == CameraCharacteristics.LENS_FACING_FRONT
@@ -566,12 +568,19 @@ class PosenetActivity :
     var (true_or_not, feedback, c) = tree_pose(person)  //mountain_pose(person)
     Log.d("HEllo", true_or_not.toString())
 
-//    currentPoseHeader!!.text = "Current Pose: Mountain Pose"
+    try{
+
+      Log.d("hello", "******=====Setting textview**8*******")
+      activity?.runOnUiThread(java.lang.Runnable { this.currentPoseHeader!!.text = "Current Pose: " + poses[currentPoseIndex]})
+    }
+   catch (e: Exception){
+     e.printStackTrace()
+   }
 
     // This is the code for writing text on the screen.
     // Just need to create a method here for calculations.
     canvas.drawText(
-      poses[currentPoseIndex],
+      feedback,
       (15.0f * widthRatio),
       (30.0f * heightRatio + bottom),
       paint
@@ -595,10 +604,14 @@ class PosenetActivity :
 
     if (true_or_not){
       currentPoseIndex++
+
+      for (i in 1..5) {
+        activity?.runOnUiThread(java.lang.Runnable { this.timeLeftText!!.text = (5 - i).toString() + " seconds"})
+        Thread.sleep(1000)
+      }
       if (currentPoseIndex == 3){
         currentPoseIndex = 0
       }
-      Thread.sleep(2000)
     }
   }
 
