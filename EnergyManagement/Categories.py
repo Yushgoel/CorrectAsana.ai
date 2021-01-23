@@ -36,6 +36,8 @@ reverse_categories = {
 }
 
 
+
+
 condition = {}
 wattage = {}
 
