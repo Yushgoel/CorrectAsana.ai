@@ -55,6 +55,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import java.util.concurrent.Semaphore
@@ -161,6 +162,12 @@ class PosenetActivity :
   /** Abstract interface to someone holding a display surface.    */
   private var surfaceHolder: SurfaceHolder? = null
 
+  private var currentPoseHeader: TextView? = null
+
+  private var currentPoseIndex: Int = 0
+
+  private var poses = arrayOf("Mountain Pose", "Tree Pose", "Squat")
+
   /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
   private val stateCallback = object : CameraDevice.StateCallback() {
 
@@ -219,6 +226,7 @@ class PosenetActivity :
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     surfaceView = view.findViewById(R.id.surfaceView)
+    currentPoseHeader = view.findViewById(R.id.PoseHeader)
     surfaceHolder = surfaceView!!.holder
   }
 
@@ -555,13 +563,15 @@ class PosenetActivity :
       }
     }
 
-    var (true_or_not, feedback, c) = mountain_pose(person)
+    var (true_or_not, feedback, c) = tree_pose(person)  //mountain_pose(person)
     Log.d("HEllo", true_or_not.toString())
+
+//    currentPoseHeader!!.text = "Current Pose: Mountain Pose"
 
     // This is the code for writing text on the screen.
     // Just need to create a method here for calculations.
     canvas.drawText(
-      feedback,
+      poses[currentPoseIndex],
       (15.0f * widthRatio),
       (30.0f * heightRatio + bottom),
       paint
@@ -582,6 +592,14 @@ class PosenetActivity :
 
     // Draw!
     surfaceHolder!!.unlockCanvasAndPost(canvas)
+
+    if (true_or_not){
+      currentPoseIndex++
+      if (currentPoseIndex == 3){
+        currentPoseIndex = 0
+      }
+      Thread.sleep(2000)
+    }
   }
 
 
@@ -629,9 +647,7 @@ class PosenetActivity :
 
   private fun mountain_pose( person: Person): Triple<Boolean, String, String>{
   /*
-  a is distance between two wrists
-  b and c are angle between neck,shoulder and wrist
-  e and f are distance between head to ankle because in plank distace will be maximum.
+  b and c are angle between two shoulders  and wrist
   */
 
     var b = angle_calc(person.keyPoints[6].position, person.keyPoints[5].position, person.keyPoints[7].position)
@@ -656,6 +672,26 @@ class PosenetActivity :
     return Triple(false, b.toString(), b.toString() + "    " + c.toString())
   }
 
+  private fun tree_pose(person: Person): Triple<Boolean, String, String>{
+    /*
+        a is the angle between the right hip, knee and ankle.
+        b is the distance between wrists.
+
+     */
+    var a = angle_calc(person.keyPoints[12].position, person.keyPoints[14].position, person.keyPoints[16].position)
+    var b = euclidian(person.keyPoints[9].position, person.keyPoints[10].position)
+
+    if (check_range(a, 0.0, 2.6) && check_range(b, 0.0, 30.0)){
+      return Triple(true, "Good job! Now hold one for ", a.toString() + "    " + b.toString())
+    } else if (check_range(a, 2.6, 5.0)){
+      return Triple(false, "Raise your leg higher", a.toString() + "    " + b.toString())
+    } else if (check_range(b, 30.0, 1000.0)){
+      return Triple(false, "Bring your hands closer", a.toString() + "    " + b.toString())
+    }
+
+    return Triple(false, a.toString(), b.toString())
+
+  }
   /** Process image using Posenet library.   */
   private fun processImage(bitmap: Bitmap) {
     // Crop bitmap.

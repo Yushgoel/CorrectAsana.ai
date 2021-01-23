@@ -687,6 +687,7 @@ id ALT
 id CTRL
 id FUNCTION
 id META
+id PoseHeader
 id SHIFT
 id SYM
 id accessibility_action_clickable_span
