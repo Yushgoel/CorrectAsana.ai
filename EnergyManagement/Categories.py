@@ -53,8 +53,9 @@ if start == 1:
         item = str(input("Item name: "))
         watt = str(input("Wattage: "))
         itemtype = int(input("0 for entertainment, 1 for cleaning, 2 for work, 3 for house, 4 for device, 5 for kitchen: "))
+        onoff = int(input("Press 1 if it is on and 0 if it is off"))
 
-        electronics[item] = [watt, False, itemtype]
+        electronics[item] = [watt, onoff, itemtype]
 
         end = int(input("Press 1 to end 0 to continue"))
 
@@ -65,9 +66,15 @@ if start == 1:
     print(electronics)
     #remove later only for testing
 
+
+    for item in electronics:
+        if item
+
+
 else:
-    pass
+    i = int()
     while next != 1:
-        pass
+
+
 
 
