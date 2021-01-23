@@ -44,6 +44,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Process
+import android.speech.tts.TextToSpeech
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import android.util.Log
@@ -68,6 +69,7 @@ import org.tensorflow.lite.examples.posenet.lib.Position
 import java.io.Console
 import java.lang.Exception
 import java.sql.DriverManager.println
+import java.util.*
 
 class PosenetActivity :
   Fragment(),
@@ -168,7 +170,9 @@ class PosenetActivity :
 
   private var currentPoseIndex: Int = 0
 
-  private var poses = arrayOf("Mountain Pose", "Tree Pose", "Squat")
+  private var poses = arrayOf("Mountain Pose", "Mountain Pose", "Mountain Pose") //"Tree Pose", "Squat")
+
+//  private var tts = TextToSpeech(this.context, this)
 
   /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
   private val stateCallback = object : CameraDevice.StateCallback() {
@@ -190,6 +194,15 @@ class PosenetActivity :
       this@PosenetActivity.activity?.finish()
     }
   }
+
+//  private val textToSpeechEngine: TextToSpeech {
+//    TextToSpeech(this,
+//      TextToSpeech.OnInitListener { status ->
+//          if (status == TextToSpeech.SUCCESS) {
+//            textToSpeechEngine.language = locale.US
+//          }
+//      })
+//  }
 
   /**
    * A [CameraCaptureSession.CaptureCallback] that handles events related to JPEG capture.
@@ -231,6 +244,7 @@ class PosenetActivity :
     currentPoseHeader = view.findViewById(R.id.PoseHeader)
     timeLeftText = view.findViewById(R.id.Clock)
     surfaceHolder = surfaceView!!.holder
+//    speak("hello how are you in this stupid world")
   }
 
   override fun onResume() {
@@ -254,6 +268,22 @@ class PosenetActivity :
     super.onDestroy()
     posenet.close()
   }
+
+//  override fun onInit(status: Int) {
+//
+//    if (status == TextToSpeech.SUCCESS) {
+//      // set US English as language for tts
+//      val result = tts!!.setLanguage(Locale.US)
+//
+//      if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+//        Log.e("TTS","The Language specified is not supported!")
+//      }
+//
+//    } else {
+//      Log.e("TTS", "Initilization Failed!")
+//    }
+//
+//  }
 
   private fun requestCameraPermission() {
     if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
@@ -565,7 +595,25 @@ class PosenetActivity :
       }
     }
 
-    var (true_or_not, feedback, c) = tree_pose(person)  //mountain_pose(person)
+    currentPoseIndex = 2
+    var (true_or_not, feedback, c) = Triple(false, "Hello", "1.0")
+    if (currentPoseIndex == 0){
+      var (temp_true_or_not, temp_feedback, temp_c) = mountain_pose(person)
+      true_or_not = temp_true_or_not
+      feedback = temp_feedback
+      c = temp_c
+    } else if (currentPoseIndex == 1){
+      var (temp_true_or_not, temp_feedback, temp_c) = tree_pose(person)   //mountain_pose(person)  //tree_pose(person)
+      true_or_not = temp_true_or_not
+      feedback = temp_feedback
+      c = temp_c
+    } else if (currentPoseIndex == 2){
+      var (temp_true_or_not, temp_feedback, temp_c) = squat(person)   //Triple(true, "Good Job!", "1.0")
+      true_or_not = temp_true_or_not
+      feedback = temp_feedback
+      c = temp_c
+    }
+
     Log.d("HEllo", true_or_not.toString())
 
     try{
@@ -585,6 +633,7 @@ class PosenetActivity :
       (30.0f * heightRatio + bottom),
       paint
     )
+//    speak(feedback)
 
     canvas.drawText(
       true_or_not.toString() + "   " + c,
@@ -607,7 +656,8 @@ class PosenetActivity :
 
       for (i in 1..5) {
         activity?.runOnUiThread(java.lang.Runnable { this.timeLeftText!!.text = (5 - i).toString() + " seconds"})
-        Thread.sleep(1000)
+//        speak((5 - i).toString())
+//        Thread.sleep(1000)
       }
       if (currentPoseIndex == 3){
         currentPoseIndex = 0
@@ -615,6 +665,10 @@ class PosenetActivity :
     }
   }
 
+//  private fun speak(text: String) {
+////    activity?.runOnUiThread(java.lang.Runnable { this.tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")})
+//    tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+//  }
 
   private fun square(value: Int): Double{
     return Math.pow(value.toDouble(), 2.0)
@@ -705,6 +759,44 @@ class PosenetActivity :
     return Triple(false, a.toString(), b.toString())
 
   }
+
+  private fun squat(person: Person): Triple<Boolean, String, String> {
+    /*
+    a is angle between right shoulder, right hip and right knee
+    b is angle between left shoulder, left hip and left knee
+    c is horizontal distance between right shoulder and right hip
+    d is horizontal distance between left shoulder and left knee.
+     */
+
+    var a = angle_calc(
+      person.keyPoints[6].position,
+      person.keyPoints[12].position,
+      person.keyPoints[14].position
+    )
+    var b = angle_calc(
+      person.keyPoints[5].position,
+      person.keyPoints[11].position,
+      person.keyPoints[13].position
+    )
+
+    var c = (person.keyPoints[6].position.x - person.keyPoints[12].position.x).toDouble()
+    var d = (person.keyPoints[5].position.x - person.keyPoints[11].position.x).toDouble()
+
+    c = Math.abs(c)
+    d = Math.abs(d)
+
+    if ((check_range(a, 0.0, 2.1) || check_range(b, 0.0, 2.1)) && (check_range(c, 0.0, 25.0) || check_range(d, 0.0, 25.0))
+    ) {
+      return Triple(true, "Perfect. Keep it up.", c.toString() + "  " + a.toString())
+    } else if (check_range(a, 2.1, 5.0) || check_range(b, 2.1, 5.0)) {
+      return Triple(false, "Bend your knees more", c.toString() + " " + a.toString())
+    } else if (check_range(c, 25.0, 100.0) || check_range(d, 25.0, 100.0)) {
+      return Triple(false, "Straighten your back", c.toString() + "  " + a.toString())
+    }
+
+    return Triple(false, (a.toString() + "   " + b.toString()), (c.toString() + "   " + d.toString()))
+  }
+
   /** Process image using Posenet library.   */
   private fun processImage(bitmap: Bitmap) {
     // Crop bitmap.
