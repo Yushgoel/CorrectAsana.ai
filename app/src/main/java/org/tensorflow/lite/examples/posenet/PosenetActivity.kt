@@ -555,20 +555,20 @@ class PosenetActivity :
       }
     }
 
-    var (true_or_not, b, c) = mountain_pose(person)
+    var (true_or_not, feedback, c) = mountain_pose(person)
     Log.d("HEllo", true_or_not.toString())
 
     // This is the code for writing text on the screen.
     // Just need to create a method here for calculations.
     canvas.drawText(
-      "Score: %.2f".format(person.score),
+      feedback,
       (15.0f * widthRatio),
       (30.0f * heightRatio + bottom),
       paint
     )
 
     canvas.drawText(
-      true_or_not.toString() + "   " + b.toString() + "    " + c.toString(),
+      true_or_not.toString() + "   " + c,
       (15.0f * widthRatio),
       (50.0f * heightRatio + bottom),
       paint
@@ -627,32 +627,33 @@ class PosenetActivity :
     return false
   }
 
-  private fun mountain_pose( person: Person): Triple<Boolean, Double, Double>{
+  private fun mountain_pose( person: Person): Triple<Boolean, String, String>{
   /*
   a is distance between two wrists
   b and c are angle between neck,shoulder and wrist
   e and f are distance between head to ankle because in plank distace will be maximum.
   */
-//    var a = euclidian(person.keyPoints[9].position, person.keyPoints[10].position)
 
     var b = angle_calc(person.keyPoints[6].position, person.keyPoints[5].position, person.keyPoints[7].position)
     var c = angle_calc(person.keyPoints[5].position, person.keyPoints[6].position, person.keyPoints[8].position)
-    Log.d("Hello", "and the angle isssss")
-    Log.d("Hello", b.toString())
-//    var d = euclidian(person.keyPoints[0].position, person.keyPoints[9].position)
-//    var e = euclidian(person.keyPoints[0].position, person.keyPoints[10].position)
 
-//    var a = angle_calc(person.keyPoints[9], person.keyPoints)
-    Log.d("Hello", "b = " + b.toString())
-    Log.d("Hello", "c = " + c.toString())
-
-
-    if (check_range(b, 1.9, 2.4) && check_range(c, 1.9, 2.4)) // && check_range(d, 100.0, 145.0) && check_range(e, 100.0, 145.0)
+    // If everything is correct
+    if (check_range(b, 1.9, 2.5) && check_range(c, 1.9, 2.5)) // && check_range(d, 100.0, 145.0) && check_range(e, 100.0, 145.0)
 //      check_range(a, 20.0, 160.0) &&
     {
-      return Triple(true, b, c)
+      return Triple(true, "Perfect! Now hold the pose for ", b.toString() + "    " + c.toString())
     }
-    return Triple(false, b, c)
+    else if (check_range(b, 2.5, 5.0) && check_range(c, 2.5, 5.0)){
+      return Triple(false, "Raise your hands higher", b.toString() + "    " + c.toString())
+    }
+    else if (check_range(b, 2.5, 5.0)){
+      return Triple(false, "Raise your left hand higher", b.toString() + "    " + c.toString())
+    }
+    else if (check_range(c, 2.5, 5.0)){
+      return Triple(false, "Raise your right hand higher", b.toString() + "    " + c.toString())
+    }
+
+    return Triple(false, b.toString(), b.toString() + "    " + c.toString())
   }
 
   /** Process image using Posenet library.   */
