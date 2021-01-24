@@ -11,8 +11,11 @@ import android.widget.Toast
 import java.util.*
 
 private var startButton: Button? = null
+private var langButton: Button? = null
 
 private var mTTS: TextToSpeech? = null
+
+private var lang: String = "English"
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +38,21 @@ class MainActivity : AppCompatActivity() {
         startButton!!.setOnClickListener()
         {
             val intent = Intent(this, CameraActivity::class.java)
+            intent.putExtra("LangToUse", lang)
             startActivity(intent)
+        }
+
+        langButton = findViewById(R.id.LanguageButton)
+
+        langButton!!.setOnClickListener()
+        {
+            if (langButton!!.text == "Use Hindi"){
+                lang = "Hindi"
+                langButton!!.text = "Use English"
+            } else{
+                lang = "English"
+                langButton!!.text = "Use Hindi"
+            }
         }
     }
 }

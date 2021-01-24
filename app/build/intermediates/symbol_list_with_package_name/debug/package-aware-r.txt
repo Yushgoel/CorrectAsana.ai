@@ -661,6 +661,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable correct_asanalogo
 drawable custom_rounded_corners
 drawable ic_launcher
 drawable ic_launcher_background
@@ -689,14 +690,13 @@ id CTRL
 id Clock
 id DummySelfChoose
 id FUNCTION
+id LanguageButton
+id Logo
 id META
 id PoseHeader
 id SHIFT
 id SYM
 id StartWorkout
-id StaticAsana
-id StaticTo
-id StaticWelcome
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1

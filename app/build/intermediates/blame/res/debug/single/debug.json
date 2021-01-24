@@ -72,6 +72,10 @@
         "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png"
     },
     {
+        "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/drawable_correct_asanalogo.png.flat",
+        "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/drawable/correct_asanalogo.png"
+    },
+    {
         "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
     },

@@ -18,14 +18,27 @@ package org.tensorflow.lite.examples.posenet
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 
 class CameraActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.tfe_pn_activity_camera)
+
+    val bundle: Bundle ?= intent.extras
+
+    val lang: String ?= bundle!!.getString("LangToUse")
+
+    var bundle2: Bundle?= Bundle()
+    bundle2!!.putString("LangToUse", lang)
+
+    var fragInfo: Fragment?= PosenetActivity()
+    fragInfo!!.arguments = bundle2
+
     savedInstanceState ?: supportFragmentManager.beginTransaction()
-      .replace(R.id.container, PosenetActivity())
+      .replace(R.id.container, fragInfo)
       .commit()
   }
 }

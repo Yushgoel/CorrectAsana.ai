@@ -8,37 +8,36 @@
     android:background="#FED8B1"
     >
 
-    <TextView
-        android:id="@+id/StaticWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Welcome"
-        android:textColor="#000"
-        android:textSize="35dp"
-        android:layout_marginTop="10dp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/StaticWelcome"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:text="Welcome"-->
+<!--        android:textColor="#000"-->
+<!--        android:textSize="35dp"-->
+<!--        android:layout_marginTop="10dp"/>-->
 
-    <TextView
-        android:id="@+id/StaticTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/StaticWelcome"
-        android:text="to"
-        android:textColor="#000"
-        android:textSize="35dp"
-        android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/StaticAsana"
+<!--    <TextView-->
+<!--        android:id="@+id/StaticTo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_below="@+id/StaticWelcome"-->
+<!--        android:text="to"-->
+<!--        android:textColor="#000"-->
+<!--        android:textSize="35dp"-->
+<!--        android:layout_marginTop="10dp"/>-->
+
+    <ImageView
+        android:id="@+id/Logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/StaticTo"
-        android:layout_centerHorizontal="true"
-        android:text="CorrectAsana.ai"
-        android:textColor="#000"
-        android:textSize="35dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_alignParentTop="true"
+        android:src="@drawable/correct_asanalogo"
+        />
+
 
     <Button
         android:id="@+id/StartWorkout"
@@ -46,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textSize="25dp"
-        android:layout_below="@+id/StaticWelcome"
-        android:layout_marginTop="200dp"
+        android:layout_below="@+id/Logo"
+        android:layout_marginTop="50dp"
         android:text="Guided Workout"
         android:background="@drawable/custom_rounded_corners"
     />
@@ -60,10 +59,24 @@
         android:layout_alignRight="@+id/StartWorkout"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/StartWorkout"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="80dp"
         android:textSize="25dp"
         android:background="@drawable/custom_rounded_corners"
         android:text="Self-driven"
+        />
+
+    <Button
+        android:id="@+id/LanguageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/StartWorkout"
+        android:layout_alignRight="@+id/StartWorkout"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/DummySelfChoose"
+        android:layout_marginTop="80dp"
+        android:textSize="20dp"
+        android:background="@drawable/custom_rounded_corners"
+        android:text="Use Hindi"
         />
 
 </RelativeLayout>

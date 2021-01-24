@@ -167,7 +167,17 @@ class PosenetActivity :
 
   private var currentPoseIndex: Int = 0
 
-  private var poses = arrayOf("Mountain Pose", "Tree Pose", "Squat") //"Tree Pose", "Squat")
+
+
+  private var locale: Locale? = Locale("en", "IND")
+  private var lang: String? = "Hindi"
+
+  private var hindiPoses = arrayOf("ताड़ासन", "वृक्षासन", "मालासन")
+
+  private var englishPoses = arrayOf("Mountain Pose", "Tree Pose", "Squat")
+
+  private var poses = arrayOf("Mountain Pose", "Tree Pose", "Squat")
+
 
   private var mTTS: TextToSpeech? = null
 
@@ -176,9 +186,9 @@ class PosenetActivity :
   private var firstTime: Boolean = true
 
   private var firstSquat: Boolean = true
-//  private var tts = TextToSpeech(this.context, this)
 
-//  private var locale: Locale? = Locale("en")
+
+
   /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
   private val stateCallback = object : CameraDevice.StateCallback() {
 
@@ -235,7 +245,10 @@ class PosenetActivity :
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ): View? = inflater.inflate(R.layout.tfe_pn_activity_posenet, container, false)
+  ): View?{
+    lang = this.arguments!!.getString("LangToUse")
+    return inflater.inflate(R.layout.tfe_pn_activity_posenet, container, false)
+  }
 
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -244,17 +257,22 @@ class PosenetActivity :
     timeLeftText = view.findViewById(R.id.Clock)
     surfaceHolder = surfaceView!!.holder
 
+    if (lang == "Hindi"){
+      poses = hindiPoses
+      locale = Locale("hi", "IND")
+    } else {
+      poses = englishPoses
+      locale = Locale("en", "IND")
+    }
+
     mTTS = TextToSpeech(this.context, TextToSpeech.OnInitListener { status ->
       if (status == TextToSpeech.SUCCESS){
-        val locale = Locale("en", "IND")
+//        val locale = Locale("en", "IND")
         mTTS!!.language = locale
         mTTS!!.setSpeechRate(0.85f)
-//        mTTS!!.speak("Welcome to correct aasana dot A I", TextToSpeech.QUEUE_FLUSH, null)
-//        Thread.sleep(6000)
-//        Log.d("Speak", "WOrking")
+
       }
     })
-//    speak("hello how are you in this stupid world")
   }
 
   override fun onResume() {
@@ -534,7 +552,12 @@ class PosenetActivity :
 
     if (firstTime){
       firstTime = false
-      mTTS!!.speak("Let's start off with the " + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
+      if (lang == "Hindi"){
+        mTTS!!.speak("आइये " + poses[currentPoseIndex] + " के साथ शुरुआत करते हैं", TextToSpeech.QUEUE_FLUSH, null) //
+      } else{
+        mTTS!!.speak("Let's start off with the " + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
+      }
+
       Thread.sleep(2800)
     }
 
@@ -602,20 +625,28 @@ class PosenetActivity :
       true_or_not = temp_true_or_not
       feedback = temp_feedback
       c = temp_c
-      firstSquat = true
+      if (true_or_not){
+        firstSquat = true
+      }
+
     } else if (currentPoseIndex == 1 && !firstSquat){
       var (temp_true_or_not, temp_feedback, temp_c) = tree_pose(person)   //mountain_pose(person)  //tree_pose(person)
       true_or_not = temp_true_or_not
       feedback = temp_feedback
       c = temp_c
-      firstSquat = true
+      if (true_or_not){
+        firstSquat = true
+      }
     } else if (currentPoseIndex == 2 && !firstSquat){
 
       var (temp_true_or_not, temp_feedback, temp_c) = squat(person)   //Triple(true, "Good Job!", "1.0")
       true_or_not = temp_true_or_not
       feedback = temp_feedback
       c = temp_c
-      firstSquat = true
+      if (true_or_not){
+        firstSquat = true
+      }
+
     } else if (currentPoseIndex == 2){
       firstSquat = false
     }
@@ -637,8 +668,12 @@ class PosenetActivity :
 
 
     try{
+      if (lang == "Hindi"){
+        activity?.runOnUiThread(java.lang.Runnable { this.currentPoseHeader!!.text = "अब " + poses[currentPoseIndex] + " करते हैं"})
+      } else {
+        activity?.runOnUiThread(java.lang.Runnable { this.currentPoseHeader!!.text = "Let's do " + poses[currentPoseIndex]})
+      }
 
-      activity?.runOnUiThread(java.lang.Runnable { this.currentPoseHeader!!.text = "Let's do " + poses[currentPoseIndex]})
     }
    catch (e: Exception){
      e.printStackTrace()
@@ -694,11 +729,23 @@ class PosenetActivity :
 
       var firstString = "Let's move on to the "
 
-      if (currentPoseIndex == 0) {
-        firstString = "Let's repeat the set with the "
-        firstString = firstString
+      if (currentPoseIndex == 0 && lang == "Hindi") {
+        firstString = "आइये अब दोबारा शुरू करते हैं"
+        mTTS!!.speak(firstString, TextToSpeech.QUEUE_FLUSH, null)
       }
-      mTTS!!.speak(firstString + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
+      else if (currentPoseIndex == 0) {
+        firstString = "Let's repeat the set with the "
+        mTTS!!.speak(firstString + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
+
+      } else if (lang == "Hindi"){
+        firstString = "अब "
+        mTTS!!.speak(firstString + poses[currentPoseIndex] + " करते हैं", TextToSpeech.QUEUE_FLUSH, null)
+
+      } else{
+        mTTS!!.speak(firstString + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
+      }
+
+//      mTTS!!.speak(firstString + poses[currentPoseIndex], TextToSpeech.QUEUE_FLUSH, null)
       Thread.sleep(3500)
 
       if (currentPoseIndex == 1){
@@ -758,23 +805,29 @@ class PosenetActivity :
     var b = angle_calc(person.keyPoints[6].position, person.keyPoints[5].position, person.keyPoints[7].position)
     var c = angle_calc(person.keyPoints[5].position, person.keyPoints[6].position, person.keyPoints[8].position)
 
+    var feedbacks = arrayOf("Perfect Now hold for 5 seconds", "Raise your hands higher", "Raise your left hand higher", "Raise your right hand higher", "Try it Again.")
+
+    if (lang == "Hindi"){
+      feedbacks = arrayOf("५ सेकंड रुकें", "अपने हाथ ऊपर करें", "अपना उल्टा हाथ ऊपर करें", "अपना सीधा हाथ ऊपर करें", "दुबारा करें")
+    }
+
     // If everything is correct
     if (check_range(b, 1.9, 2.5) && check_range(c, 1.9, 2.5) && (person.keyPoints[9].position.y < 80)) // && check_range(d, 100.0, 145.0) && check_range(e, 100.0, 145.0)
 //      check_range(a, 20.0, 160.0) &&
     {
-      return Triple(true, "Perfect Now hold for 5 seconds", b.toString() + "    " + c.toString())
+      return Triple(true, feedbacks[0], b.toString() + "    " + c.toString())
     }
     else if (check_range(b, 2.5, 5.0) && check_range(c, 2.5, 5.0)){
-      return Triple(false, "Raise your hands higher", b.toString() + "    " + c.toString())
+      return Triple(false, feedbacks[1], b.toString() + "    " + c.toString())
     }
     else if (check_range(b, 2.5, 5.0)){
-      return Triple(false, "Raise your left hand higher", b.toString() + "    " + c.toString())
+      return Triple(false, feedbacks[2], b.toString() + "    " + c.toString())
     }
     else if (check_range(c, 2.5, 5.0)){
-      return Triple(false, "Raise your right hand higher", b.toString() + "    " + c.toString())
+      return Triple(false, feedbacks[3], b.toString() + "    " + c.toString())
     }
 
-    return Triple(false, "Try it Again.", b.toString() + "    " + c.toString())
+    return Triple(false, feedbacks[4], b.toString() + "    " + c.toString())
   }
 
   private fun tree_pose(person: Person): Triple<Boolean, String, String>{
@@ -786,15 +839,22 @@ class PosenetActivity :
     var a = angle_calc(person.keyPoints[12].position, person.keyPoints[14].position, person.keyPoints[16].position)
     var b = euclidian(person.keyPoints[9].position, person.keyPoints[10].position)
 
-    if (check_range(a, 0.0, 2.6) && check_range(b, 0.0, 30.0)){
-      return Triple(true, "Good job Now hold for 5 seconds", a.toString() + "    " + b.toString())
-    } else if (check_range(a, 2.6, 5.0)){
-      return Triple(false, "Raise your leg higher", a.toString() + "    " + b.toString())
-    } else if (check_range(b, 30.0, 1000.0)){
-      return Triple(false, "Bring your hands closer", a.toString() + "    " + b.toString())
+    var feedbacks = arrayOf("Good job Now hold for 5 seconds", "Raise your leg higher", "Bring your hands closer")
+
+
+    if (lang == "Hindi"){
+      feedbacks = arrayOf("बहुत बढ़िए। अब ५ सेकंड रुकें", "अपना पैर ऊपर करें", "हाथ करीब लाएं")
     }
 
-    return Triple(false, "Raise your leg higher", b.toString())
+    if (check_range(a, 0.0, 2.6) && check_range(b, 0.0, 30.0)){
+      return Triple(true, feedbacks[0], a.toString() + "    " + b.toString())
+    } else if (check_range(a, 2.6, 5.0)){
+      return Triple(false, feedbacks[1], a.toString() + "    " + b.toString())
+    } else if (check_range(b, 30.0, 1000.0)){
+      return Triple(false, feedbacks[2], a.toString() + "    " + b.toString())
+    }
+
+    return Triple(false, feedbacks[1], b.toString())
 
   }
 
@@ -823,16 +883,22 @@ class PosenetActivity :
     c = Math.abs(c)
     d = Math.abs(d)
 
-    if ((check_range(a, 0.0, 2.1) || check_range(b, 0.0, 2.1)) && (check_range(c, 0.0, 25.0) || check_range(d, 0.0, 25.0))
-    ) {
-      return Triple(true, "Perfect Keep it up for 5 seconds", c.toString() + "  " + a.toString())
-    } else if (check_range(a, 2.1, 5.0) || check_range(b, 2.1, 5.0)) {
-      return Triple(false, "Bend your knees more", c.toString() + " " + a.toString())
-    } else if (check_range(c, 25.0, 100.0) || check_range(d, 25.0, 100.0)) {
-      return Triple(false, "Straighten your back", c.toString() + "  " + a.toString())
+    var feedbacks = arrayOf("Perfect Keep it up for 5 seconds", "Bend your knees more", "Straighten your back")
+
+    if (lang == "Hindi"){
+      feedbacks = arrayOf("बहुत बढ़िए। अब ५ सेकंड रुकें", "अपना घुटना और मोड़ें", "पीठ सीधी करें")
     }
 
-    return Triple(false, "Bend your knees", (c.toString() + "   " + d.toString()))
+    if ((check_range(a, 0.0, 2.1) || check_range(b, 0.0, 2.1)) && (check_range(c, 0.0, 25.0) || check_range(d, 0.0, 25.0))
+    ) {
+      return Triple(true, feedbacks[0], c.toString() + "  " + a.toString())
+    } else if (check_range(a, 2.1, 5.0) || check_range(b, 2.1, 5.0)) {
+      return Triple(false, feedbacks[1], c.toString() + " " + a.toString())
+    } else if (check_range(c, 25.0, 100.0) || check_range(d, 25.0, 100.0)) {
+      return Triple(false, feedbacks[2], c.toString() + "  " + a.toString())
+    }
+
+    return Triple(false, feedbacks[1], (c.toString() + "   " + d.toString()))
   }
 
   /** Process image using Posenet library.   */
