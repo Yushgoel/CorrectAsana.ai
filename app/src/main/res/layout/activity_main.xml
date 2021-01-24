@@ -76,7 +76,7 @@
         android:layout_marginTop="80dp"
         android:textSize="20dp"
         android:background="@drawable/custom_rounded_corners"
-        android:text="Use Hindi"
+        android:text="Switch to Hindi"
         />
 
 </RelativeLayout>
