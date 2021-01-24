@@ -25,18 +25,21 @@
         android:testOnly="true"
         android:theme="@style/AppTheme.Posenet" >
         <activity
-            android:name="org.tensorflow.lite.examples.posenet.TestActivity"
-            android:exported="true"
-            android:label="@string/tfe_pn_app_name" >
-        </activity>
-        <activity
-            android:name="org.tensorflow.lite.examples.posenet.CameraActivity"
+            android:name="org.tensorflow.lite.examples.posenet.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="org.tensorflow.lite.examples.posenet.TestActivity"
+            android:exported="true"
+            android:label="@string/tfe_pn_app_name" />
+        <activity
+            android:name="org.tensorflow.lite.examples.posenet.CameraActivity"
+            android:exported="true" >
         </activity>
     </application>
 

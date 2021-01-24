@@ -5,67 +5,73 @@
 5    android:versionName="1.0" >
 6
 7    <uses-sdk
-7-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:10:3-15
+7-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:5:5-17
 8        android:minSdkVersion="21"
-8-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:10:3-15
+8-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:5:5-17
 9        android:targetSdkVersion="23" />
-9-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:10:3-15
+9-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:5:5-17
 10
 11    <uses-permission android:name="android.permission.CAMERA" />
-11-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:5:3-63
-11-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:5:20-60
+11-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:7:5-65
+11-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:7:22-62
 12
 13    <uses-feature android:name="android.hardware.camera" />
-13-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:7:3-58
-13-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:7:17-55
+13-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:9:5-60
+13-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:9:19-57
 14    <uses-feature android:name="android.hardware.camera.autofocus" />
-14-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:8:3-68
-14-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:8:17-65
+14-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:10:5-70
+14-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:10:19-67
 15
 16    <application
-16-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:12:3-33:17
+16-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:12:5-36:19
 17        android:allowBackup="true"
-17-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:13:7-33
+17-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:13:9-35
 18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 18-->[androidx.core:core:1.1.0] /Users/yush/.gradle/caches/transforms-2/files-2.1/0f6d3704d9260a8aadb632e373006138/core-1.1.0/AndroidManifest.xml:24:18-86
 19        android:debuggable="true"
 20        android:icon="@mipmap/ic_launcher"
-20-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:14:7-41
+20-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:14:9-43
 21        android:label="@string/tfe_pn_app_name"
-21-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:15:7-46
+21-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:15:9-48
 22        android:roundIcon="@mipmap/ic_launcher_round"
-22-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:16:7-52
+22-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:16:9-54
 23        android:supportsRtl="true"
-23-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:17:7-33
+23-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:17:9-35
 24        android:testOnly="true"
 25        android:theme="@style/AppTheme.Posenet" >
-25-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:18:7-46
+25-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:18:9-48
 26        <activity
-26-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:20:5-24:16
-27            android:name="org.tensorflow.lite.examples.posenet.TestActivity"
-27-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:21:9-37
-28            android:exported="true"
-28-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:23:9-32
-29            android:label="@string/tfe_pn_app_name" >
-29-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:22:9-48
-30        </activity>
-31        <activity
-31-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:26:5-31:16
-32            android:name="org.tensorflow.lite.examples.posenet.CameraActivity"
-32-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:26:15-45
-33            android:exported="true" >
-33-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:26:46-69
-34            <intent-filter>
-34-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:27:7-30:23
-35                <action android:name="android.intent.action.MAIN" />
-35-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:28:9-60
-35-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:28:17-58
-36
-37                <category android:name="android.intent.category.LAUNCHER" />
-37-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:29:9-68
-37-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:29:19-66
-38            </intent-filter>
-39        </activity>
-40    </application>
-41
-42</manifest>
+26-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:19:9-25:20
+27            android:name="org.tensorflow.lite.examples.posenet.MainActivity"
+27-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:19:19-47
+28            android:exported="true" >
+28-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:20:13-36
+29            <intent-filter>
+29-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:21:13-24:29
+30                <action android:name="android.intent.action.MAIN" />
+30-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:22:17-69
+30-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:22:25-66
+31
+32                <category android:name="android.intent.category.LAUNCHER" />
+32-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:23:17-77
+32-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:23:27-74
+33            </intent-filter>
+34        </activity>
+35        <activity
+35-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:27:9-30:64
+36            android:name="org.tensorflow.lite.examples.posenet.TestActivity"
+36-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:28:13-41
+37            android:exported="true"
+37-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:29:13-36
+38            android:label="@string/tfe_pn_app_name" />
+38-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:30:13-52
+39        <activity
+39-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:31:9-34:20
+40            android:name="org.tensorflow.lite.examples.posenet.CameraActivity"
+40-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:32:13-43
+41            android:exported="true" >
+41-->/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/AndroidManifest.xml:33:13-36
+42        </activity>
+43    </application>
+44
+45</manifest>

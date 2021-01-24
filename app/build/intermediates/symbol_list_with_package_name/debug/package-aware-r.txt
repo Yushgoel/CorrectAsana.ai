@@ -661,6 +661,7 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable custom_rounded_corners
 drawable ic_launcher
 drawable ic_launcher_background
 drawable ic_launcher_foreground
@@ -686,11 +687,16 @@ drawable tooltip_frame_light
 id ALT
 id CTRL
 id Clock
+id DummySelfChoose
 id FUNCTION
 id META
 id PoseHeader
 id SHIFT
 id SYM
+id StartWorkout
+id StaticAsana
+id StaticTo
+id StaticWelcome
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -909,6 +915,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_main
 layout custom_dialog
 layout notification_action
 layout notification_action_tombstone

@@ -178,6 +178,7 @@ class PosenetActivity :
   private var firstSquat: Boolean = true
 //  private var tts = TextToSpeech(this.context, this)
 
+//  private var locale: Locale? = Locale("en")
   /** [CameraDevice.StateCallback] is called when [CameraDevice] changes its state.   */
   private val stateCallback = object : CameraDevice.StateCallback() {
 
@@ -248,9 +249,9 @@ class PosenetActivity :
         val locale = Locale("en", "IND")
         mTTS!!.language = locale
         mTTS!!.setSpeechRate(0.85f)
-        mTTS!!.speak("Welcome to correct aasana dot A I", TextToSpeech.QUEUE_FLUSH, null)
-        Thread.sleep(6000)
-        Log.d("Speak", "WOrking")
+//        mTTS!!.speak("Welcome to correct aasana dot A I", TextToSpeech.QUEUE_FLUSH, null)
+//        Thread.sleep(6000)
+//        Log.d("Speak", "WOrking")
       }
     })
 //    speak("hello how are you in this stupid world")
@@ -616,10 +617,6 @@ class PosenetActivity :
       c = temp_c
       firstSquat = true
     } else if (currentPoseIndex == 2){
-//      var (temp_true_or_not, temp_feedback, temp_c) = squat(person)   //Triple(true, "Good Job!", "1.0")
-//      true_or_not = temp_true_or_not
-//      feedback = temp_feedback
-//      c = temp_c
       firstSquat = false
     }
     else if (currentPoseIndex == 1){

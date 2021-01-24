@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/layout_activity_main.xml.flat",
+        "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/layout/activity_main.xml"
+    },
+    {
         "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_foreground.png.flat",
         "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"
     },
@@ -58,6 +62,10 @@
     {
         "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/drawable-xxhdpi_tfl2_logo.png.flat",
         "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/drawable-xxhdpi/tfl2_logo.png"
+    },
+    {
+        "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/drawable_custom_rounded_corners.xml.flat",
+        "source": "/Users/yush/AndroidStudioProjects/android_posenet/app/src/main/res/drawable/custom_rounded_corners.xml"
     },
     {
         "merged": "/Users/yush/AndroidStudioProjects/android_posenet/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_foreground.png.flat",
